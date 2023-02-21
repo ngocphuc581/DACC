@@ -27,3 +27,29 @@ mongoose.connection.on('warning', () => {
   console.log('Connect Error');
 });
 app.use(express.json());
+//----------------------------------User--------------------------------\\
+app.post('/ViengChua/getUser', async (req, res) => {
+  const user = await User.findOne({
+    username: req.body.username,
+    password: req.body.password,
+  });
+  res.send(user);
+});
+app.post('/ViengChua/createUser', async (req, res) => {
+  const getId = await PhapDanh.findOne({level: 1});
+  const user = await new User({
+    username: req.body.username,
+    password: req.body.password,
+    point: req.body.point,
+    level: getId.level,
+    nhang: req.body.nhang,
+    id_PhapDanh: getId._id,
+  });
+  user.save();
+  res.send(user);
+});
+
+app.post('/ViengChua/checkAccount', async (req, res) => {
+  const check = await User.findOne({username: req.body.username});
+  res.send(check);
+});
