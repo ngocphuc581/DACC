@@ -53,3 +53,16 @@ app.post('/ViengChua/checkAccount', async (req, res) => {
   const check = await User.findOne({username: req.body.username});
   res.send(check);
 });
+
+app.post('/ViengChua/changePassword', async (req, res) => {
+  const changePassword = await User.findByIdAndUpdate(
+    {
+      _id: req.body._id,
+    },
+    {
+      password: req.body.password,
+    },
+    {new: true},
+  );
+  res.send(changePassword);
+});
