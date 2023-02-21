@@ -49,6 +49,11 @@ app.post('/ViengChua/createUser', async (req, res) => {
   res.send(user);
 });
 
+app.post('/ViengChua/checkAccount', async (req, res) => {
+  const check = await User.findOne({username: req.body.username});
+  res.send(check);
+});
+
 app.post('/ViengChua/changePassword', async (req, res) => {
   const changePassword = await User.findByIdAndUpdate(
     {
