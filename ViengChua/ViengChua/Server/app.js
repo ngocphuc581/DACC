@@ -67,6 +67,50 @@ app.post('/ViengChua/changePassword', async (req, res) => {
   res.send(changePassword);
 });
 
+app.post('/ViengChua/createMoreAccount', async (req, res) => {
+  const addMore = await Phat.findByIdAndUpdate(
+    {
+      _id: req.body._id,
+    },
+    {
+      $push: {
+        AccountList: [
+          {
+            id_User: req.body.id_User,
+          },
+        ],
+      },
+    },
+    {
+      new: true,
+    },
+  );
+  res.send(addMore);
+});
+app.post('/ViengChua/getPhat', async (req, res) => {
+  const getPhat = await Phat.find().sort({point: 1});
+  res.send(getPhat);
+});
+app.post('/ViengChua/updateUser', async (req, res) => {
+  const updateUser = await User.findByIdAndUpdate(
+    {
+      _id: req.body._id,
+    },
+    {
+      level: req.body.level,
+      id_PhapDanh: req.body.id_PhapDanh,
+    },
+    {
+      new: true,
+    },
+  );
+  res.send(updateUser);
+});
+app.post('/ViengChua/getLevelPhapDanh', async (req, res) => {
+  const level = await PhapDanh.findOne({level: req.body.level});
+  res.send(level);
+});
+
 app.post('/ViengChua/updateNhang', async (req, res) => {
   const updateNhang = await User.findByIdAndUpdate(
     {
