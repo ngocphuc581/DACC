@@ -66,3 +66,58 @@ app.post('/ViengChua/changePassword', async (req, res) => {
   );
   res.send(changePassword);
 });
+
+app.post('/ViengChua/updateNhang', async (req, res) => {
+  const updateNhang = await User.findByIdAndUpdate(
+    {
+      _id: req.body._id,
+    },
+    {
+      nhang: req.body.nhang,
+    },
+    {
+      new: true,
+    },
+  );
+  res.send(updateNhang);
+});
+
+//----------------------------------Phap Danh--------------------------\\
+app.post('/ViengChua/createPhapDanh', async (req, res) => {
+  const phapdanh = new PhapDanh({
+    name_PhapDanh: req.body.name_PhapDanh,
+    level: req.body.level,
+  });
+  phapdanh.save();
+  res.send(phapdanh);
+});
+app.post('/ViengChua/getPhapDanh', async (req, res) => {
+  const getPD = await PhapDanh.findById({_id: req.body._id});
+  res.send(getPD);
+});
+//----------------------------------Ca Dao--------------------------\\
+app.post('/ViengChua/createCaDao', async (req, res) => {
+  const cadao = new CaDao({
+    paragraph1: req.body.paragraph1,
+    paragraph2: req.body.paragraph2,
+    paragraph3: req.body.paragraph3,
+    paragraph4: req.body.paragraph4,
+  });
+  cadao.save();
+  res.send(cadao);
+});
+app.get('/ViengChua/getCaDao', async (req, res) => {
+  const getCaDao = await CaDao.find();
+  res.send(getCaDao);
+});
+//----------------------------------Phat--------------------------\\
+app.post('/ViengChua/createPhat', async (req, res) => {
+  const phat = new Phat({
+    name: req.body.name,
+    picture: req.body.picture,
+    point: req.body.point,
+    AccountList: [],
+  });
+  phat.save();
+  res.send(phat);
+});
