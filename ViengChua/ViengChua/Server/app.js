@@ -208,3 +208,27 @@ app.post('/ViengChua/getLevelPhapDanh', async (req, res) => {
   const level = await PhapDanh.findOne({level: req.body.level});
   res.send(level);
 });
+
+app.post('/ViengChua/updatePoint', async (req, res) => {
+  const point = await User.findByIdAndUpdate(
+    {
+      _id: req.body._id,
+    },
+    {
+      point: req.body.point + 10,
+      nhang: req.body.nhang - 1,
+    },
+    {
+      new: true,
+    },
+  );
+  res.send(point);
+});
+
+app.get('/', (req, res) => {
+  res.send('WELCOME TO NODEJS');
+});
+
+app.listen(3000, () => {
+  console.log('Listening on 3000');
+});
